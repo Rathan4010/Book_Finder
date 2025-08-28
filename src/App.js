@@ -4,19 +4,35 @@ import "./App.css";
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
   const [books, setBooks] = useState([]);
+  const [loading, setLoading] = useState(false);  
+  const [error, setError] = useState("");         
 
   const handleSearch = () => {
-    console.log("Searching for:", searchTerm);
+    if (!searchTerm.trim()) {
+      setError("Please enter a book name.");
+      setBooks([]);
+      return;
+    }
+
+    setLoading(true);
+    setError("");
+    setBooks([]);
 
     fetch(`https://openlibrary.org/search.json?title=${searchTerm}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log("Books:", data.docs);
-        setBooks(data.docs)
+        if (data.docs.length === 0) {
+          setError("No books found for your search.");
+        }
+        setBooks(data.docs);
       })
-      .catch((err) => console.error("Error:", err));
+      .catch(() => {
+        setError("Something went wrong. Please try again.");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
-
 
   return (
     <>
@@ -34,20 +50,24 @@ function App() {
           />
           <button onClick={handleSearch}>Search</button>
         </div>
-        </div>
-      {/* results*/}
+      </div>
+
+      {/* Show loading, error, or results */}
       <div className="results">
-        {books.map((book, index) => (
+        {loading && <p>Loading...</p>}
+        {error && <p className="error">{error}</p>}
+        
+        {!loading && !error && books.map((book, index) => (
           <div key={index} className="book">
             {book.cover_i ? (
-        <img
-          src={`https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`}
-          alt={book.title}
-          className="book-cover"
-        />
-      ) : (
-        <div className="no-cover">No Image</div>
-      )}
+              <img
+                src={`https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`}
+                alt={book.title}
+                className="book-cover"
+              />
+            ) : (
+              <div className="no-cover">No Image</div>
+            )}
             <h3>{book.title}</h3>
             <p>
               {book.author_name ? book.author_name.join(", ") : "Unknown Author"}

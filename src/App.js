@@ -19,7 +19,7 @@ function App() {
 
 
   return (
-    <div>
+    <>
       <div className="top-section">
         <div className="heading"><i>book finder</i></div>
         <div className="searchbar">
@@ -30,10 +30,11 @@ function App() {
             placeholder="enter the book name"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && handleSearch()} // Enter key support
+            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
           />
+          <button onClick={handleSearch}>Search</button>
         </div>
-      </div>
+        </div>
       {/* results*/}
       <div className="results">
         {books.map((book, index) => (
@@ -51,13 +52,16 @@ function App() {
             <p>
               {book.author_name ? book.author_name.join(", ") : "Unknown Author"}
             </p>
+            <p>
+              <strong>First Published:</strong> {book.first_publish_year || "N/A"}
+            </p>
           </div>
         ))}
       </div>
 
       {/* Background image section */}
       <div className="background-section"></div>
-    </div>
+    </>
   );
 }
 

@@ -7,9 +7,48 @@ It demonstrates how to build an interactive UI that connects to an external API,
 - 🔍 Search books by title
 - 📖 View author(s)
 - ⚡ Instant results from Open Library API
-- 🖥️ Built with React
+- 🖥️ Simple, clean React-based UI  
 
 ## Installation
 1. Clone the repository:
    ```bash
    git clone https://github.com/Rathan4010/Book_Finder.git
+
+
+## 🛠️ Tech Stack
+- React.js (Create React App)  
+- Open Library API for book data  
+- JavaScript (ES6+), HTML5, CSS3
+
+## 📂 Project Structure
+Book_Finder/
+│── public/ # Static files
+│── src/ # React components & logic
+│ ├── App.js
+│ ├── index.js
+│ └── ...
+│── package.json # Project metadata & dependencies
+│── README.md # Project documentation
+
+
+## ⚙️ Installation & Usage (Run Locally)
+1. Clone the repo  
+   ```bash
+   git clone https://github.com/Rathan4010/Book_Finder.git
+
+2. Navigate into the project
+
+cd Book_Finder
+
+
+3. Install dependencies
+
+npm install
+
+
+4. Start the app
+
+npm start
+
+
+The app will run on http://localhost:3000
